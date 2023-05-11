@@ -2,6 +2,9 @@ name: App Main Workflow
 on: workflow_dispatch
 jobs:
   check-backend:
+    permissions:
+      pull-requests: read
+      contents: read
     runs-on: ubuntu-latest
     # defaults:
     #   run:
