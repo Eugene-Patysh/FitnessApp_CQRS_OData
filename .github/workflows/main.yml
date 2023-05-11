@@ -2,7 +2,7 @@ name: App Main Workflow
 on: workflow_dispatch
 jobs:
   check-backend:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         dotnet-version: [ '6.0.x', '7.0.x' ]
@@ -10,6 +10,7 @@ jobs:
       # - name: Checkout
       #   uses: actions/checkot@v3
       - name: Path ${GITHUB_WORKSPACE}
+        run: echo path ${GITHUB_WORKSPACE}
       - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
         uses: actions/setup-dotnet@v3
         with:
