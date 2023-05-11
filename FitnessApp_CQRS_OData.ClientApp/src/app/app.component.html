@@ -1,0 +1,57 @@
+<mat-toolbar color="primary">
+  <span>Fitness App</span>
+  <button mat-mini-fab color="primary" id="sidebarToggle" (click)="toggle()">
+    <mat-icon *ngIf="isToggle">chevron_left</mat-icon>
+    <mat-icon *ngIf="!isToggle">chevron_right</mat-icon>
+  </button>
+  <span class="example-spacer"></span>
+  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+    <mat-icon>favorite</mat-icon>
+  </button>
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+    <mat-icon>share</mat-icon>
+  </button>
+  <div ngbDropdown class="d-inline-block">
+    <button type="button" class="btn btn-outline-basic" id="dropdownBasic1" ngbDropdownToggle>
+      Language
+    </button>
+    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+      <button ngbDropdownItem (click)="switchLanguage('en-us')">English</button>
+      <button ngbDropdownItem (click)="switchLanguage('ru-ru')">Russian</button>
+    </div>
+  </div>
+</mat-toolbar>
+<div class="d-flex" id="wrapper">
+  <!-- Sidebar-->
+  <div class="border-end bg-white" id="sidebar-wrapper">
+      <!-- <div class="sidebar-heading border-bottom bg-light">Fitness App</div> -->
+      <div class="list-group list-group-flush">
+          <a class="list-group-item list-group-item-action list-group-item-light p-3" [routerLink]="['/']">{{ '_.SIDEBAR.MENU.HOME' | translate }}</a>
+          <!-- <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">{{ '_.SIDEBAR.MENU.PRODUCTS' | translate }}</a> -->
+          <mat-expansion-panel (opened)="panelOpenState = true"
+                       (closed)="panelOpenState = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{ '_.SIDEBAR.MENU.PRODUCTS' | translate }}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" [routerLink]="['/food/category/list']">{{ '_.SIDEBAR.PRODUCT_MENU.CATEGORIES' | translate }}</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" [routerLink]="['/food/subcategory/list']">{{ '_.SIDEBAR.PRODUCT_MENU.SUB_CATEGORIES' | translate }}</a>
+          </mat-expansion-panel>
+          <!-- <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Shortcuts</a>
+          <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Overview</a>
+          <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Events</a>
+          <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Profile</a>
+          <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Status</a> -->
+      </div>
+  </div>
+  <!-- Page content wrapper-->
+  <div id="page-content-wrapper">
+      <!-- Page content-->
+      <div class="container-fluid">
+        <mat-card>
+          <router-outlet></router-outlet>
+        </mat-card>
+      </div>
+  </div>
+</div>

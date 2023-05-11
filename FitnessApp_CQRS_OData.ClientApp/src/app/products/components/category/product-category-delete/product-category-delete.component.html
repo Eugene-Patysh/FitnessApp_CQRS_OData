@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>Product Category Deletion</h1>
+<div mat-dialog-content>
+  <p>Are you sure you want to delete the "{{data.title}}" category?</p>
+</div>
+<mat-divider></mat-divider>
+<div mat-dialog-actions class="footer">
+  <button mat-raised-button (click)="onNoClick()">Close</button>
+  <button mat-raised-button color="warn" (click)="onDeleteClick()" cdkFocusInitial>Delete</button>
+</div>

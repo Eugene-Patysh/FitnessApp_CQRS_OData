@@ -1,0 +1,13 @@
+.filter-component {
+  margin-right: 2rem;
+}
+
+.input-item {
+  margin-left: 8px;
+  width: 70%;
+}
+
+.select-item {
+  margin-left: 8px;
+  width: 20%;
+}

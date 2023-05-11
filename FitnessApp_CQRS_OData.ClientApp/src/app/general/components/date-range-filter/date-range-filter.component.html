@@ -1,0 +1,39 @@
+<mat-label>{{label}}</mat-label>
+<div class="filter-component">
+
+  <mat-form-field appearance="outline">
+    <mat-select [(ngModel)]="filterOperator" (ngModelChange)="applyFilter()">
+      <mat-option *ngFor="let operator of filterOperators" value="{{operator.id}}">{{operator.text}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <ng-container *ngIf="!isDateRangeFilter">
+    <mat-form-field appearance="outline">
+
+      <input matInput [matDatepicker]="picker" [(ngModel)]="startDate" (ngModelChange)="applyFilter()">
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker">
+        <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+      </mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+
+    </mat-form-field>
+  </ng-container>
+
+  <ng-container *ngIf="isDateRangeFilter">
+    <mat-form-field appearance="outline">
+
+      <mat-date-range-input [rangePicker]="picker">
+        <input matStartDate placeholder="Start date" [(ngModel)]="startDate" (ngModelChange)="applyFilter()">
+        <input matEndDate placeholder="End date" [(ngModel)]="endDate" (ngModelChange)="applyFilter()">
+      </mat-date-range-input>
+      <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker">
+        <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+      </mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+
+    </mat-form-field>
+  </ng-container>
+
+</div>

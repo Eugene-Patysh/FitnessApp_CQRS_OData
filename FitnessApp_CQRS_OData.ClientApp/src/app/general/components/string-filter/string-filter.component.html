@@ -1,0 +1,26 @@
+<!-- <div class="filter-component">
+  <mat-form-field appearance="outline">
+    <mat-label>{{label}}</mat-label>
+    <input class="input-item" matInput type="text" placeholder="Enter value" [(ngModel)]="search" (ngModelChange)="applyFilter()">
+
+    <mat-select name="ampm" class="select-item" [(ngModel)]="filterOperator">
+      <mat-option *ngFor="let operator of filterOperators" value="{{operator.id}}">{{operator.text}}</mat-option>
+    </mat-select>
+ </mat-form-field>
+</div> -->
+
+<mat-label>{{label}}</mat-label>
+<div class="filter-component">
+  <mat-form-field appearance="outline">
+    <mat-select [(ngModel)]="filterOperator" (ngModelChange)="applyFilter()">
+      <mat-option *ngFor="let operator of filterOperators" value="{{operator.id}}">{{operator.text}}</mat-option>
+    </mat-select>
+ </mat-form-field>
+ <mat-form-field class="form-field" appearance="outline">
+  <input matInput type="text" placeholder="Enter value" [(ngModel)]="search" (ngModelChange)="applyFilter()">
+  <button *ngIf="search" matSuffix mat-icon-button aria-label="Clear" (click)="search=''">
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-form-field>
+</div>
+

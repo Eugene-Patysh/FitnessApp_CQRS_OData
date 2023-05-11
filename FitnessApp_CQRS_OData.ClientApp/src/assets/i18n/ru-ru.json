@@ -1,0 +1,14 @@
+{
+  "_": {
+    "SIDEBAR": {
+      "MENU": {
+        "HOME": "Главная",
+        "PRODUCTS": "Продукты"
+      },
+      "PRODUCT_MENU": {
+        "CATEGORIES": "Категории",
+        "SUB_CATEGORIES": "Подкатегории"
+      }
+    }
+  }
+}

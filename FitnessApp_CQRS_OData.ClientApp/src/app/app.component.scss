@@ -1,0 +1,25 @@
+mat-card {
+  margin: 2rem 1rem;
+  padding: 1rem;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+#sidebarToggle {
+  margin-left: 6rem;
+}
+
+.list-group-item {
+  font-weight: bold !important;
+}
+
+::ng-deep .mat-expansion-panel-body {
+  padding: 0px !important;
+}
+
+::ng-deep .mat-expansion-panel-header {
+  padding-left: 1rem !important;
+  font-weight: bold !important;
+}

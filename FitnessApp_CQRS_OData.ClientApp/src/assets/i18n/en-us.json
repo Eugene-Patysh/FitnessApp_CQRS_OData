@@ -1,0 +1,14 @@
+{
+  "_": {
+    "SIDEBAR": {
+      "MENU": {
+        "HOME": "Home",
+        "PRODUCTS": "Food"
+      },
+      "PRODUCT_MENU": {
+        "CATEGORIES": "Categories",
+        "SUB_CATEGORIES": "Subсategories"
+      }
+    }
+  }
+}

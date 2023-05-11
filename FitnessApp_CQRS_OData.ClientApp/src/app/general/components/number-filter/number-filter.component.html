@@ -1,0 +1,64 @@
+<!-- <mat-label>{{label}}</mat-label>
+<div class="filter-component">
+
+  <mat-form-field appearance="outline">
+
+    <mat-select class="select-item" [(ngModel)]="filterOperator">
+      <mat-option *ngFor="let operator of filterOperators" value="{{operator.id}}">{{operator.text}}</mat-option>
+    </mat-select>
+
+    <ng-container *ngIf="isNumericRangeFilter; then rangeValueFilter; else singleValueFilter"></ng-container>
+
+    <ng-template #singleValueFilter>
+      <input matInput type="text" placeholder="number" [(ngModel)]="low" (ngModelChange)="applyFilter()">
+    </ng-template>
+
+    <ng-template #rangeValueFilter>
+      <input matInput type="text" placeholder="from" [(ngModel)]="low" (ngModelChange)="applyFilter()"
+             [disabled]="filterOperator === 'none' || filterOperator === 'isNull' || filterOperator === 'isNotNull'">
+      <input matInput type="text" placeholder="to" [(ngModel)]="high" (ngModelChange)="applyFilter()"
+             [disabled]="filterOperator === 'none' || filterOperator === 'isNull' || filterOperator === 'isNotNull'">
+    </ng-template>
+
+ </mat-form-field>
+
+</div> -->
+
+<mat-label>{{label}}</mat-label>
+<div class="filter-component">
+
+  <mat-form-field appearance="outline">
+    <mat-select [(ngModel)]="filterOperator" (ngModelChange)="applyFilter()">
+      <mat-option *ngFor="let operator of filterOperators" value="{{operator.id}}">{{operator.text}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <ng-container *ngIf="isNumericRangeFilter; then rangeValueFilter; else singleValueFilter"></ng-container>
+
+  <ng-template #singleValueFilter>
+    <mat-form-field appearance="outline" class="form-field">
+      <input matInput type="number" placeholder="number" [(ngModel)]="low" (ngModelChange)="applyFilter()">
+      <button *ngIf="low" matSuffix mat-icon-button aria-label="Clear" (click)="low=null">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </ng-template>
+
+  <ng-template #rangeValueFilter>
+    <mat-form-field appearance="outline" class="form-field">
+      <input matInput type="number" placeholder="from" [(ngModel)]="low" (ngModelChange)="applyFilter()"
+            [disabled]="filterOperator === 'none' || filterOperator === 'isNull' || filterOperator === 'isNotNull'">
+            <button *ngIf="low" matSuffix mat-icon-button aria-label="Clear" (click)="low=null">
+              <mat-icon>close</mat-icon>
+            </button>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="form-field">
+    <input matInput type="number" placeholder="to" [(ngModel)]="high" (ngModelChange)="applyFilter()"
+            [disabled]="filterOperator === 'none' || filterOperator === 'isNull' || filterOperator === 'isNotNull'">
+            <button *ngIf="high" matSuffix mat-icon-button aria-label="Clear" (click)="high=null">
+              <mat-icon>close</mat-icon>
+            </button>
+    </mat-form-field>
+  </ng-template>
+
+</div>

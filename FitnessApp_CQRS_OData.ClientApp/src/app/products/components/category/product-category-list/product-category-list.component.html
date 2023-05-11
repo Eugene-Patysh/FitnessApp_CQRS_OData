@@ -1,0 +1,90 @@
+<h1>Food categories</h1>
+
+<div class="mb-4">
+  <button mat-raised-button color="primary" (click)="addData()">Add</button>
+</div>
+
+<div class="d-flex">
+  <app-string-filter #title [label]="'Title'" [field]="'title'" (changes)="onFilterChanged()"></app-string-filter>
+  <app-number-filter #subCategoriesCount [label]="'Count of subCategories'" [field]="'subCategoriesCount'" (changes)="onFilterChanged()"></app-number-filter>
+</div>
+
+<div class="d-flex">
+  <app-date-range-filter #created [label]="'Created date'" [field]="'created'" (changes)="onFilterChanged()"></app-date-range-filter>
+  <app-date-range-filter #updated [label]="'Updated date'" [field]="'updated'" (changes)="onFilterChanged()"></app-date-range-filter>
+</div>
+
+<div class="example-table-container">
+  <table mat-table [dataSource]="data" class="example-table"
+         matSort (matSortChange)="sortData($event)">
+    <!-- Number Column -->
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="id">#</th>
+      <td mat-cell *matCellDef="let row">{{row.id}}</td>
+    </ng-container>
+
+    <!-- Title Column -->
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="title">Title</th>
+      <td mat-cell *matCellDef="let row"><a [routerLink]="['/', 'food', 'category', 'view', row.id]">{{row.title}}</a></td>
+    </ng-container>
+
+    <!-- State Column -->
+    <ng-container matColumnDef="subCategoriesCount">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="subCategoriesCount">Subcategories</th>
+      <td mat-cell *matCellDef="let row">{{row.subCategoriesCount}}</td>
+    </ng-container>
+
+    <!-- Created Column -->
+    <ng-container matColumnDef="created">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="created">
+        Created
+      </th>
+      <td mat-cell *matCellDef="let row">{{row.created | date}}</td>
+    </ng-container>
+
+    <!-- Updated Column -->
+    <ng-container matColumnDef="updated">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="updated">
+        Updated
+      </th>
+      <td mat-cell *matCellDef="let row">{{row.updated | date}}</td>
+    </ng-container>
+
+    <!-- Updated Column -->
+    <ng-container matColumnDef="btns">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header="btns" class="actions">
+        Actions
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="actions">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="edit(row)">
+            <mat-icon>edit</mat-icon>
+            <span>Edit</span>
+          </button>
+          <button mat-menu-item (click)="delete(row)">
+            <mat-icon>delete</mat-icon>
+            <span>Delete</span>
+          </button>
+        </mat-menu>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    <!-- Row shown when there is no matching data that will be provided to the wrapper table. -->
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell data-not-found" colspan="5">No data</td>
+    </tr>
+  </table>
+</div>
+<mat-paginator (page)="handlePageEvent($event)"
+               [length]="total"
+               [pageSizeOptions]="[10, 50, 100]"
+               [showFirstLastButtons]="true"
+               aria-label="Select page">
+</mat-paginator>

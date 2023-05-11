@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>{{data.id ? 'Product Category Updation' : 'Product Category Creation'}}</h1>
+<div mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Title</mat-label>
+    <input matInput [(ngModel)]="data.title">
+  </mat-form-field>
+</div>
+<mat-divider></mat-divider>
+<div mat-dialog-actions class="footer">
+  <button mat-raised-button (click)="onNoClick()">Close</button>
+  <button mat-raised-button color="primary" (click)="onCreateClick()" cdkFocusInitial>{{data.id ? 'Update' : 'Create'}}</button>
+</div>

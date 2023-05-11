@@ -1,0 +1,12 @@
+
+<div *ngIf="productCategory">
+  <h1>{{ productCategory.title }}</h1>
+
+  <h3>Subcategories:</h3>
+  <mat-list>
+    <mat-list-item *ngFor="let sub of productCategory.productSubCategories">
+      <span matListItemTitle>{{sub.title}}</span>
+    </mat-list-item>
+  </mat-list>
+</div>
+
