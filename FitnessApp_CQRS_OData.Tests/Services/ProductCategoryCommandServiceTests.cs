@@ -43,7 +43,7 @@ namespace FitnessApp_CQRS_OData.Tests.Services
             var categories = _productContext.ProductCategories.ToList();
             var createdCategory = categories.FirstOrDefault(c => c.Title == "Meat");
 
-            Assert.Null(createdCategory);
+            Assert.NotNull(createdCategory);
             Assert.NotNull(createdCategory?.Id);
         }
     }
