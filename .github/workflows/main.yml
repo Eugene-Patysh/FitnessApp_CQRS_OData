@@ -69,7 +69,7 @@ jobs:
       - name: Build
         working-directory: ./FitnessApp_CQRS_OData.ClientApp
         run: |
-          npm run build -- --prod
+          npm run build --prod
       - name: Lint
         working-directory: ./FitnessApp_CQRS_OData.ClientApp
         run: |
