@@ -40,7 +40,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          repository: FitnessApp_CQRS_OData
+          repository: Eugene-Patysh/FitnessApp_CQRS_OData
           path: FitnessApp_CQRS_OData.ClientApp
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
