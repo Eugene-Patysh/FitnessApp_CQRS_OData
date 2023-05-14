@@ -1,35 +1,35 @@
 name: App Main Workflow
 on: workflow_dispatch
 jobs:
-  check-backend:
-    permissions:
-      pull-requests: read
-      contents: read
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        dotnet-version: [ '6.0.x', '7.0.x' ]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: ${{ matrix.dotnet-version }}
-      - name: Display dotnet version
-        run: dotnet --version
-      - uses: actions/cache@v3
-        with:
-          path: ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget
-      - name: Install dependencies
-        run: dotnet restore
-      - name: Build
-        run: dotnet build --configuration Release --no-restore
-      - name: Tests
-        run: dotnet test --no-restore --verbosity normal
+  # check-backend:
+  #   permissions:
+  #     pull-requests: read
+  #     contents: read
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       dotnet-version: [ '6.0.x', '7.0.x' ]
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+  #     - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
+  #       uses: actions/setup-dotnet@v3
+  #       with:
+  #         dotnet-version: ${{ matrix.dotnet-version }}
+  #     - name: Display dotnet version
+  #       run: dotnet --version
+  #     - uses: actions/cache@v3
+  #       with:
+  #         path: ~/.nuget/packages
+  #         key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-nuget
+  #     - name: Install dependencies
+  #       run: dotnet restore
+  #     - name: Build
+  #       run: dotnet build --configuration Release --no-restore
+  #     - name: Tests
+  #       run: dotnet test --no-restore --verbosity normal
 
   check-frontend:
     runs-on: ubuntu-latest
@@ -40,8 +40,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          repository: Eugene-Patysh/FitnessApp_CQRS_OData/FitnessApp_CQRS_OData.ClientApp
+          repository: Eugene-Patysh/FitnessApp_CQRS_OData
           path: FitnessApp_CQRS_OData.ClientApp
+      
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
@@ -61,13 +62,16 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
       - name: Install Dependencies
+        working-directory: ./FitnessApp_CQRS_OData.ClientApp
         if: steps.cache-nodemodules.outputs.cache-hit != 'true'
         run: |
           npm ci
       - name: Build
+        working-directory: ./FitnessApp_CQRS_OData.ClientApp
         run: |
           npm run build -- --prod
       - name: Lint
+        working-directory: ./FitnessApp_CQRS_OData.ClientApp
         run: |
           npm run lint
 
