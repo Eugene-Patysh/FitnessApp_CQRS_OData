@@ -73,6 +73,6 @@ jobs:
       - name: Lint
         working-directory: ./FitnessApp_CQRS_OData.ClientApp
         run: |
-          npm run eslint . --ext .js,.jsx,.ts,.tsx
+          npm run lint
 
 
