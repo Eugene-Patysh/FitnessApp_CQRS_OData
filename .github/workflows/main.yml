@@ -6,23 +6,12 @@ jobs:
       pull-requests: read
       contents: read
     runs-on: ubuntu-latest
-    # defaults:
-    #   run:
-    #     working-directory: ./FitnessApp_CQRS_OData
     strategy:
       matrix:
         dotnet-version: [ '6.0.x', '7.0.x' ]
     steps:
-      # - name: Checkout
-      #   uses: actions/checkot@v3
-      # - name: Checkout tools repo
-        # uses: actions/checkout@v3
-        # with:
-        #   repository: FitnessApp_CQRS_OData
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Path ${GITHUB_WORKSPACE}
-        run: echo path ${GITHUB_WORKSPACE}
       - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
         uses: actions/setup-dotnet@v3
         with:
