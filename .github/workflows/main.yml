@@ -104,10 +104,10 @@ jobs:
         run: npm run build
         
       - name: Upload Artifact
-        working-directory: ./FitnessApp_CQRS_OData.ClientApp
+        # working-directory: ./FitnessApp_CQRS_OData.ClientApp
         uses: actions/upload-artifact@v3
         with:
-          path: build
+          path: ./FitnessApp_CQRS_OData.ClientApp/build
           name: build-files
 
   deploy-dev:
