@@ -29,3 +29,7 @@ const setEnv = () => {
 };
 
 setEnv();
+
+
+// "build": "npm run config && ng build",
+// "config": "ts-node src/environments/set-env.ts",
