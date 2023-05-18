@@ -1,6 +1,6 @@
-name: CI Workflow
-on: workflow_dispatch
-jobs:
+# name: CI Workflow
+# on: workflow_dispatch
+# jobs:
   # check-backend:
   #   permissions:
   #     pull-requests: read
@@ -31,48 +31,140 @@ jobs:
   #     - name: Tests
   #       run: dotnet test --no-restore --verbosity normal
 
-  check-frontend:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [16.x, 18.x]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        # with:
-        #   repository: Eugene-Patysh/FitnessApp_CQRS_OData
-        #   path: FitnessApp_CQRS_OData.ClientApp
+  # check-frontend:
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       node-version: [16.x, 18.x]
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v3
+  #       # with:
+  #       #   repository: Eugene-Patysh/FitnessApp_CQRS_OData
+  #       #   path: FitnessApp_CQRS_OData.ClientApp
       
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
+  #     - name: Use Node.js ${{ matrix.node-version }}
+  #       uses: actions/setup-node@v1
+  #       with:
+  #         node-version: ${{ matrix.node-version }}
 
-      - name: Cache node modules
-        id: cache-nodemodules
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-node-modules
-        with:
-          # caching node_modules
-          path: node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-      - name: Install Dependencies
+  #     - name: Cache node modules
+  #       id: cache-nodemodules
+  #       uses: actions/cache@v3
+  #       env:
+  #         cache-name: cache-node-modules
+  #       with:
+  #         # caching node_modules
+  #         path: node_modules
+  #         key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+  #         restore-keys: |
+  #           ${{ runner.os }}-build-${{ env.cache-name }}-
+  #           ${{ runner.os }}-build-
+  #           ${{ runner.os }}-
+  #     - name: Install Dependencies
+  #       working-directory: ./FitnessApp_CQRS_OData.ClientApp
+  #       if: steps.cache-nodemodules.outputs.cache-hit != 'true'
+  #       run: |
+  #         npm ci
+  #     - name: Build
+  #       working-directory: ./FitnessApp_CQRS_OData.ClientApp
+  #       run: |
+  #         npm run build
+  #     - name: Lint
+  #       working-directory: ./FitnessApp_CQRS_OData.ClientApp
+  #       run: |
+  #         npm run lint
+
+# Build and Publish
+name: Build and Publish
+on: 
+  workflow_dispatch:
+    branches:
+      - "master"
+jobs:
+  build-and-publish:
+    runs-on: 'ubuntu-latest'
+    # environment: 'dev'
+    # needs: build-and-publish
+    steps:
+     - name: Checkout
+      uses: actions/checkout@v3
+      
+    # - name: Use Node.js
+    #   uses: actions/setup-node@v1
+    #   with:
+    #     node-version: ${{ matrix.node-version }}
+      - name: Install Deps
         working-directory: ./FitnessApp_CQRS_OData.ClientApp
-        if: steps.cache-nodemodules.outputs.cache-hit != 'true'
-        run: |
-          npm ci
+        run: npm ci
+      
       - name: Build
         working-directory: ./FitnessApp_CQRS_OData.ClientApp
-        run: |
-          npm run build
-      - name: Lint
-        working-directory: ./FitnessApp_CQRS_OData.ClientApp
-        run: |
-          npm run lint
+        run: npm run build
+      
+      - name: Upload Artifact
+        # working-directory: ./FitnessApp_CQRS_OData.ClientApp
+        uses: actions/upload-artifact@v3
+        with:
+          path: build
+          name: build-files
 
+  deploy-dev:
+    runs-on: 'ubuntu-latest'
+    environment: 'Development'
+    needs: build-and-publish
+    steps:
 
+      # Download published artifact
+      - name: Download build project
+        uses: actions/download-artifact@v3
+        with:
+          name: build-files
+      # Deploy to github pages
+      - name: Deploy to Github pages
+        uses: JamesIves/github-pages-deploy-actions@4.1.1
+        with:
+          branch: gh-pages
+          folder: build
+
+  # deploy-staging:
+  #   runs-on: 'ubuntu-latest'
+  #   environment: 'Staging'
+  #   needs: [build-and-publish, deploy-dev]
+  #   steps:
+
+  #     # Download published artifact
+  #     - name: Download artifact
+  #       uses: actions/download-artifact@v2
+  #       with:
+  #         name: published-app
+  #         path: './published-app'
+
+  #     # Deploy to github pages
+  #     - name: Deploy to Azure WebApp
+  #       uses: azure/webapps-deploy@v2
+  #       with:
+  #         app-name: app-cloudlumberjack-prod
+  #         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+  #         package: './published-app'
+
+  # deploy-prod:
+  #   runs-on: 'ubuntu-latest'
+  #   environment: 'prod'
+  #   needs: [build-and-publish, deploy-dev, deploy-staging]
+  #   steps:
+
+  #     # Download published artifact
+  #     - name: Download artifact
+  #       uses: actions/download-artifact@v2
+  #       with:
+  #         name: published-app
+  #         path: './published-app'
+
+  #     # Deploy to github pages
+  #     - name: Deploy to Azure WebApp
+  #       uses: azure/webapps-deploy@v2
+  #       with:
+  #         app-name: app-cloudlumberjack-prod
+  #         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+  #         package: './published-app
