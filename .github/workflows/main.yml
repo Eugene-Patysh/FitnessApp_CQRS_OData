@@ -77,10 +77,10 @@
 
 # Build and Publish
 name: Build and Publish
-on: 
-  workflow_dispatch:
-    branches:
-      - "master"
+on: workflow_dispatch
+  # workflow_dispatch:
+  #   branches:
+  #     - "master"
 jobs:
   build-and-publish:
     runs-on: 'ubuntu-latest'
