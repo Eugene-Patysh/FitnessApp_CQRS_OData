@@ -107,7 +107,7 @@ jobs:
         # working-directory: ./FitnessApp_CQRS_OData.ClientApp
         uses: actions/upload-artifact@v3
         with:
-          path: ./FitnessApp_CQRS_OData.ClientApp/dist
+          path: ./FitnessApp_CQRS_OData.ClientApp/dist/fitness-app-cqrs-odata.client-app
           name: build-files
 
   deploy-dev:
