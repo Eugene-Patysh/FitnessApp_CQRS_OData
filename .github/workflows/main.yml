@@ -113,6 +113,7 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with: 
           path: ./FitnessApp_CQRS_OData.ClientApp/dist/fitness-app-cqrs-odata.client-app
+          name: build-files
 
   deploy-dev:
     runs-on: ubuntu-latest
