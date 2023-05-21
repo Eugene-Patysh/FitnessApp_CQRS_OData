@@ -121,7 +121,7 @@ jobs:
     # Deploy to the github-pages environment
     environment:
       name: Development
-      url: ${{ steps.deployment.outputs.page_url }}
+      # url: ${{ steps.deployment.outputs.page_url }}
     steps:
 
       # Download published artifact
@@ -132,7 +132,9 @@ jobs:
       # Deploy to github pages
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2 # or the latest "vX.X.X" version tag for this action
+        uses: actions/deploy-pages@v2
+          with:
+            artifact_name: build-files
         # uses: JamesIves/github-pages-deploy-actions@4.1.1
         # with:
         #   branch: gh-pages
