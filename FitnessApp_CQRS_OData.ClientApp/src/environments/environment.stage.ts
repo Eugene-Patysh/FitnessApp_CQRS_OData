@@ -1,4 +1,4 @@
 export const environment = {
   title: 'Stage',
-  apiUrl: ''
+  apiUrl: 'https://stage-myapp.com'
 };

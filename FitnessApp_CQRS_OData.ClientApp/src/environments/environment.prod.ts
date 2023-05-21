@@ -1,4 +1,4 @@
 export const environment = {
   title: 'Prod',
-  apiUrl: ''
+  apiUrl: 'https://myapp.com'
 };
