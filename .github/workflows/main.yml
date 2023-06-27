@@ -135,11 +135,11 @@ jobs:
         with:
           name: build-files
       # Deploy to github pages
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
-        with:
-          artifact_name: build-files
+      # - name: Deploy to GitHub Pages
+      #   id: deployment
+      #   uses: actions/deploy-pages@v2
+      #   with:
+      #     artifact_name: build-files
 
       - name: Deploy to netlify
         uses: netlify/actions/cli@master
