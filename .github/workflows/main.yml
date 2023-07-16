@@ -142,13 +142,13 @@ jobs:
       #     artifact_name: build-files
 
       - name: Deploy to netlify
-        script:
-          - npm i -g netlify-cli
-          - netlify deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN --prod
-        dependencies:
-          - build
-        only:
-          - master 
+          script:
+            - npm i -g netlify-cli
+            - netlify deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN --prod
+          dependencies:
+            - build
+          only:
+            - master 
         # uses: netlify/actions/cli@master
         # env:
         #   NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
