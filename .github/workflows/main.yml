@@ -142,10 +142,10 @@ jobs:
       #     artifact_name: build-files
 
       - name: Deploy to netlify
-        uses: jsmrcaga/action-netlify-deploy@v2.0.0
-        with:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_DEPLOY_TO_PROD: true
+        run: |
+          npm install -g netlify-cli --force
+          netlify deploy --auth=${{ secrets.NETLIFY_AUTH_TOKEN }} --dir dist/fitness-app-cqrs-odata.client-app --site=${{secrets.DEV_NETLIFY_SITE_ID}} --prod
+        
         # uses: netlify/actions/cli@master
         # env:
         #   NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
