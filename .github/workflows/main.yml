@@ -134,6 +134,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build-files
+          path: ./build
       # Deploy to github pages
       # - name: Deploy to GitHub Pages
       #   id: deployment
@@ -141,19 +142,21 @@ jobs:
       #   with:
       #     artifact_name: build-files
 
-      - name: Deploy to netlify
-        uses: jsmrcaga/action-netlify-deploy@v2.0.0
-        with:
+      # - name: Deploy to netlify
+      #   uses: jsmrcaga/action-netlify-deploy@v2.0.0
+      #   with:
+      #     NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      #     NETLIFY_SITE_ID: ${{ secrets.DEV_NETLIFY_SITE_ID }}
+      #     build_directory: ./FitnessApp_CQRS_OData.ClientApp/dist/fitness-app-cqrs-odata.client-app
+
+      - name: Deploy to netlify 
+        uses: netlify/actions/cli@master
+        env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.DEV_NETLIFY_SITE_ID }}
-          build_directory: ./FitnessApp_CQRS_OData.ClientApp/dist/fitness-app-cqrs-odata.client-app
-        # uses: netlify/actions/cli@master
-        # env:
-        #   NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-        #   NETLIFY_SITE_ID: ${{ secrets.DEV_NETLIFY_SITE_ID }}
-        # with:
-        #   args: deploy --dir=build --prod
-        #   secrets: '["NETLIFY_AUTH_TOKEN", "NETLIFY_SITE_ID"]'
+        with:
+          args: deploy --dir=build --prod
+          secrets: '["NETLIFY_AUTH_TOKEN", "NETLIFY_SITE_ID"]'
 
   # deploy-staging:
   #   runs-on: 'ubuntu-latest'
