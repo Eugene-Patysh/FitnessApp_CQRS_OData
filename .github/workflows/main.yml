@@ -75,17 +75,53 @@
   #       run: |
   #         npm run lint
 
+
+
 # Build and Publish
-name: Build and Publish
-on:
-  workflow_dispatch:
-    branches:
-      - "master"
-jobs:
-  build-and-publish:
-    runs-on: 'ubuntu-latest'
-    # environment: 'dev'
+# name: Build and Publish
+# on:
+#   workflow_dispatch:
+#     branches:
+#       - "master"
+# jobs:
+#   build-and-publish:
+#     runs-on: 'ubuntu-latest'
+#     # environment: 'dev'
+#     # needs: build-and-publish
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v3
+      
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: 18
+
+#       - name: Install Deps
+#         working-directory: ./FitnessApp_CQRS_OData.ClientApp
+#         run: npm ci
+        
+#       - name: Build
+#         working-directory: ./FitnessApp_CQRS_OData.ClientApp
+#         run: npm run build
+        
+#       - name: Upload Artifact
+#         uses: actions/upload-artifact@v3
+#         with:
+#           path: ./FitnessApp_CQRS_OData.ClientApp/dist/fitness-app-cqrs-odata.client-app
+#           name: build-files
+
+
+
+  deploy-dev:
+    runs-on: ubuntu-latest
+    environment: 'Development'
     # needs: build-and-publish
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -103,35 +139,6 @@ jobs:
         working-directory: ./FitnessApp_CQRS_OData.ClientApp
         run: npm run build
         
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          path: ./FitnessApp_CQRS_OData.ClientApp/dist/fitness-app-cqrs-odata.client-app
-          name: build-files
-
-      # - name: Upload screenshots as a github-pages artifact
-      #   uses: actions/upload-pages-artifact@v1
-      #   with: 
-      #     path: ./FitnessApp_CQRS_OData.ClientApp/dist/fitness-app-cqrs-odata.client-app
-      #     name: build-files
-
-  deploy-dev:
-    runs-on: ubuntu-latest
-    environment: 'Development'
-    needs: build-and-publish
-    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
-    permissions:
-      pages: write      # to deploy to Pages
-      id-token: write   # to verify the deployment originates from an appropriate source
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Build
-        working-directory: ./FitnessApp_CQRS_OData.ClientApp
-        run: npm run build
-
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -184,26 +191,55 @@ jobs:
         timeout-minutes: 1  
   
 
-  # deploy-staging:
-  #   runs-on: 'ubuntu-latest'
-  #   environment: 'Staging'
-  #   needs: [build-and-publish, deploy-dev]
-  #   steps:
+  deploy-staging:
+    runs-on: 'ubuntu-latest'
+    environment: 'Staging'
+    needs: [deploy-dev]
+    steps:
 
-  #     # Download published artifact
-  #     - name: Download artifact
-  #       uses: actions/download-artifact@v2
-  #       with:
-  #         name: published-app
-  #         path: './published-app'
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
 
-  #     # Deploy to github pages
-  #     - name: Deploy to Azure WebApp
-  #       uses: azure/webapps-deploy@v2
-  #       with:
-  #         app-name: app-cloudlumberjack-prod
-  #         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-  #         package: './published-app'
+      - name: Install Deps
+        working-directory: ./FitnessApp_CQRS_OData.ClientApp
+        run: npm ci
+        
+      - name: Build
+        working-directory: ./FitnessApp_CQRS_OData.ClientApp
+        run: npm run build
+        
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          path: ./FitnessApp_CQRS_OData.ClientApp/dist/fitness-app-cqrs-odata.client-app
+          name: build-files
+
+      # Download published artifact
+      - name: Download build project
+        uses: actions/download-artifact@v3
+        with:
+          name: build-files
+          path: ./build
+
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v2.0
+        with:
+          publish-dir: './build'
+          production-branch: master
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: "Deploy from GitHub Actions"
+          enable-pull-request-comment: false
+          enable-commit-comment: true
+          overwrites-pull-request-comment: true
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.DEV_NETLIFY_SITE_ID }}
+        timeout-minutes: 1 
 
   # deploy-prod:
   #   runs-on: 'ubuntu-latest'
