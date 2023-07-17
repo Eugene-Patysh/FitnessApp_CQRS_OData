@@ -12,8 +12,8 @@ const setEnv = () => {
   });
 // `environment.ts` file structure
   const envConfigFile = `export const environment = {
-    title: '${process.env["title"]}',
-    apiUrl: '${process.env["apiUrl"]}',
+    title: '${process.env["TITLE"]}',
+    apiUrl: '${process.env["API_URL"]}',
   };
 `;
   console.log(colors.magenta('The file `environment.ts` will be written with the following content: \n'));
