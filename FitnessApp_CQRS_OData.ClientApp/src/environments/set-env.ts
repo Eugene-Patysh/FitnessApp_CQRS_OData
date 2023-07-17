@@ -9,6 +9,7 @@ const setEnv = () => {
     path: 'src/environments/.env'
   });
 // `environment.ts` file structure
+console.log(`environment - ${process.env}`);
   const envConfigFile = `export const environment = {
     title: '${process.env["TITLE"]}',
     apiUrl: '${process.env["API_URL"]}',
