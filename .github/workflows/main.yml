@@ -165,7 +165,7 @@ jobs:
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v2.0
         with:
-          publish-dir: './FitnessApp_CQRS_OData.ClientApp/dist/fitness-app-cqrs-odata.client-app'
+          publish-dir: './build'
           production-branch: master
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: "Deploy from GitHub Actions"
