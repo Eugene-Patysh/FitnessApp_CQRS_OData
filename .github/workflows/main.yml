@@ -77,13 +77,13 @@
 
 
 
-Build and Publish
-name: Build and Publish
-on:
-  workflow_dispatch:
-    branches:
-      - "master"
-jobs:
+# Build and Publish
+# name: Build and Publish
+# on:
+#   workflow_dispatch:
+#     branches:
+#       - "master"
+# jobs:
 #   build-and-publish:
 #     runs-on: 'ubuntu-latest'
 #     # environment: 'dev'
@@ -111,7 +111,13 @@ jobs:
 #           path: ./FitnessApp_CQRS_OData.ClientApp/dist/fitness-app-cqrs-odata.client-app
 #           name: build-files
 
-
+# Build and Publish
+name: Build and Publish
+on:
+  workflow_dispatch:
+    branches:
+      - "master"
+jobs:
 
   deploy-dev:
     runs-on: ubuntu-latest
