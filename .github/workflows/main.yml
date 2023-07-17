@@ -147,8 +147,8 @@ jobs:
         with:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.DEV_NETLIFY_SITE_ID }}
-          build_directory: './build'
-          functions_directory: './FitnessApp_CQRS_OData.ClientApp'
+          NETLIFY_DEPLOY_TO_PROD: true
+          build_directory: ./build
 
       # - name: Deploy to netlify 
       #   uses: netlify/actions/cli@master
