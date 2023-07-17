@@ -123,8 +123,18 @@ jobs:
     permissions:
       pages: write      # to deploy to Pages
       id-token: write   # to verify the deployment originates from an appropriate source
-      
+
     steps:
+
+      - name: Build
+        working-directory: ./FitnessApp_CQRS_OData.ClientApp
+        run: npm run build
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          path: ./FitnessApp_CQRS_OData.ClientApp/dist/fitness-app-cqrs-odata.client-app
+          name: build-files
 
       # Download published artifact
       - name: Download build project
