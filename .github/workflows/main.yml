@@ -153,6 +153,7 @@ jobs:
       #     NETLIFY_DEPLOY_TO_PROD: true
 
       - name: Deploy to Netlify
+        working-directory: ./FitnessApp_CQRS_OData.ClientApp
         uses: netlify/actions/cli@master
     # Step to deploy to Netlify
         env:
