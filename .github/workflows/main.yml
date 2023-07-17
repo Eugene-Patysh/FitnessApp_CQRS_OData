@@ -117,6 +117,9 @@ jobs:
 
   deploy-dev:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./FitnessApp_CQRS_OData.ClientApp
     # environment: 'Development'
     needs: build-and-publish
     # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
