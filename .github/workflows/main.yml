@@ -122,6 +122,9 @@ jobs:
   deploy-dev:
     runs-on: ubuntu-latest
     environment: 'Development'
+    env:
+      TITLE: ${{ secrets.TITLE }}
+      API_URL: ${{ secrets.API_URL }}
     # needs: build-and-publish
     # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
     permissions:
@@ -141,6 +144,8 @@ jobs:
         working-directory: ./FitnessApp_CQRS_OData.ClientApp
         run: npm ci
         
+      - name:
+
       - name: Build
         working-directory: ./FitnessApp_CQRS_OData.ClientApp
         run: npm run build
@@ -200,6 +205,9 @@ jobs:
   deploy-staging:
     runs-on: 'ubuntu-latest'
     environment: 'Staging'
+    env:
+      TITLE: ${{ secrets.TITLE }}
+      API_URL: ${{ secrets.API_URL }}
     needs: deploy-dev
     steps:
 
