@@ -77,13 +77,13 @@
 
 
 
-# Build and Publish
-# name: Build and Publish
-# on:
-#   workflow_dispatch:
-#     branches:
-#       - "master"
-# jobs:
+Build and Publish
+name: Build and Publish
+on:
+  workflow_dispatch:
+    branches:
+      - "master"
+jobs:
 #   build-and-publish:
 #     runs-on: 'ubuntu-latest'
 #     # environment: 'dev'
@@ -194,7 +194,7 @@
   deploy-staging:
     runs-on: 'ubuntu-latest'
     environment: 'Staging'
-    needs: [deploy-dev]
+    needs: deploy-dev
     steps:
 
       - name: Checkout
