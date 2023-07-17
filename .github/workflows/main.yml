@@ -142,6 +142,7 @@ jobs:
       #     artifact_name: build-files
 
       - name: Deploy to netlify
+        working-directory: ./FitnessApp_CQRS_OData.ClientApp
         uses: jsmrcaga/action-netlify-deploy@v2.0.0
         with:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
